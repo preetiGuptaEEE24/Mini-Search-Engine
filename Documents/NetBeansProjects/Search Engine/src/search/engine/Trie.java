@@ -6,11 +6,7 @@ package search.engine;
 
 import java.util.*;
 
-/*
- * A Trie (prefix tree) used for autocomplete suggestions.
- * Inserting and searching a word of length L takes O(L) time,
- * regardless of how many words are stored in the trie.
- */
+
 public class Trie {
 
     private static class TrieNode {
@@ -29,11 +25,6 @@ public class Trie {
         current.isEndOfWord = true;
     }
 
-    /**
-     * Returns up to `limit` words in the trie that start with the given prefix.
-     * Step 1: walk down the trie following the prefix letters -> O(L)
-     * Step 2: DFS from that point to collect matching words
-     */
     public List<String> getSuggestions(String prefix, int limit) {
         List<String> results = new ArrayList<>();
         TrieNode current = root;
