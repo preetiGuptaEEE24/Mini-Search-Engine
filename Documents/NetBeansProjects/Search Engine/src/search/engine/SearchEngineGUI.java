@@ -8,16 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Swing GUI tying together the InvertedIndex (search + ranking)
- * and the Trie (autocomplete suggestions).
- *
- * Visual design notes:
- *   - A dark header bar gives the window a clear identity/branding.
- *   - The search field + button are styled as one rounded "pill" control.
- *   - Results render as white cards with soft borders on a light gray canvas,
- *     similar to a real search engine results page.
- */
+
 public class SearchEngineGUI extends JFrame {
 
     // ---- Color palette ----
@@ -54,7 +45,7 @@ public class SearchEngineGUI extends JFrame {
         setLayout(new BorderLayout());
         getContentPane().setBackground(COLOR_BACKGROUND);
 
-        // ================= Header =================
+       //header
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
         headerPanel.setBackground(COLOR_HEADER);
@@ -75,7 +66,7 @@ public class SearchEngineGUI extends JFrame {
         headerPanel.add(subtitleLabel);
         add(headerPanel, BorderLayout.NORTH);
 
-        // ================= Search bar =================
+        // search bar
         JPanel searchWrapper = new JPanel(new BorderLayout());
         searchWrapper.setBackground(COLOR_BACKGROUND);
         searchWrapper.setBorder(BorderFactory.createEmptyBorder(20, 24, 12, 24));
@@ -105,13 +96,13 @@ public class SearchEngineGUI extends JFrame {
         searchBar.add(searchButton, BorderLayout.EAST);
         searchWrapper.add(searchBar, BorderLayout.CENTER);
 
-        // Combine header + search bar into one north container
+        
         JPanel northContainer = new JPanel(new BorderLayout());
         northContainer.add(headerPanel, BorderLayout.NORTH);
         northContainer.add(searchWrapper, BorderLayout.SOUTH);
         add(northContainer, BorderLayout.NORTH);
 
-        // ================= Autocomplete popup =================
+        
         suggestionModel = new DefaultListModel<>();
         suggestionList = new JList<>(suggestionModel);
         suggestionList.setFont(new Font(FONT_FAMILY, Font.PLAIN, 14));
@@ -143,7 +134,7 @@ public class SearchEngineGUI extends JFrame {
             }
         });
 
-        // ================= Results area =================
+       
         resultsCountLabel = new JLabel(" ");
         resultsCountLabel.setFont(new Font(FONT_FAMILY, Font.PLAIN, 12));
         resultsCountLabel.setForeground(COLOR_TEXT_MUTED);
@@ -167,8 +158,7 @@ public class SearchEngineGUI extends JFrame {
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Re-wrap result cards whenever the window is resized, so text
-        // reflows correctly instead of staying wrapped at the old width.
+      
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -219,7 +209,6 @@ public class SearchEngineGUI extends JFrame {
         searchField.requestFocus();
     }
 
-    /** Runs a search using the inverted index and displays ranked, highlighted results. */
     private void performSearch() {
         suggestionPopup.setVisible(false);
         String query = searchField.getText().trim();
@@ -250,16 +239,7 @@ public class SearchEngineGUI extends JFrame {
         resultsPanel.revalidate();
         resultsPanel.repaint();
 
-        // Force each HTML result card to re-wrap its text at the ACTUAL
-        // available width, since JEditorPane doesn't know its real width
-        // until after it's been placed in the layout.
-        SwingUtilities.invokeLater(this::fixResultCardWrapping);
-    }
-
-    /**
-     * Re-measures every result card at the panel's real width so long
-     * snippets wrap onto new lines instead of overflowing past the window.
-     */
+     
     private void fixResultCardWrapping() {
         int availableWidth = resultsPanel.getWidth();
         if (availableWidth <= 0) return;
@@ -280,10 +260,7 @@ public class SearchEngineGUI extends JFrame {
         resultsPanel.repaint();
     }
 
-    /**
-     * Builds one HTML-rendered "card" for a single search result: title,
-     * score, and a content snippet with every matched query word highlighted.
-     */
+   
     private JEditorPane buildResultCard(InvertedIndex.SearchResult result, String[] queryWords) {
         Document doc = result.getDocument();
         String snippet = buildHighlightedSnippet(doc.getContent(), queryWords);
@@ -313,11 +290,7 @@ public class SearchEngineGUI extends JFrame {
         return pane;
     }
 
-    /**
-     * Escapes HTML in the raw content, trims it to a short snippet, and wraps
-     * every case-insensitive whole-word match of a query word in a highlighted
-     * <span> so it stands out visually — same idea as Google's bolded terms.
-     */
+
     private String buildHighlightedSnippet(String content, String[] queryWords) {
         String escaped = content
                 .replace("&", "&amp;")
