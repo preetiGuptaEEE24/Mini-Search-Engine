@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package search.engine;
 
 import java.io.IOException;
@@ -13,21 +10,10 @@ import java.util.stream.Stream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
-/*
- * Loads Document objects from real files in a folder, instead of using
- * the hardcoded SampleDocuments. Supports both:
- *   - .txt files (read directly as plain text)
- *   - .pdf files (text extracted using Apache PDFBox)
- *
- * Each file becomes one Document: the filename (without extension) is
- * the title, and the extracted text is the searchable content.
- */
+
 public class FileDocumentLoader {
 
-    /**
-     * Reads every .txt and .pdf file directly inside the given folder and
-     * returns them as a list of Documents with sequential ids.
-     */
+    
     public static List<Document> loadFromFolder(String folderPath) throws IOException {
         List<Document> docs = new ArrayList<>();
         Path folder = Paths.get(folderPath);
