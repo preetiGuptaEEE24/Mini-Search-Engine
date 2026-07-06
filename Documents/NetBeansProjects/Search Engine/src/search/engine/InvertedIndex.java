@@ -9,21 +9,16 @@ import java.util.*;
 
 public class InvertedIndex {
 
-    // word -> set of document ids containing it
     private final Map<String, Set<Integer>> index = new HashMap<>();
 
-    // docId -> (word -> count of that word in that doc)
     private final Map<Integer, Map<String, Integer>> termFrequency = new HashMap<>();
 
-    // docId -> total number of words in that doc (needed to normalize TF)
     private final Map<Integer, Integer> docLength = new HashMap<>();
 
-    // docId -> Document object, so we can return titles/content later
     private final Map<Integer, Document> documents = new HashMap<>();
 
     private int totalDocuments = 0;
 
-    /** Breaks text into lowercase words, stripping punctuation. */
     private List<String> tokenize(String text) {
         String cleaned = text.toLowerCase().replaceAll("[^a-z0-9\\s]", " ");
         String[] words = cleaned.trim().split("\\s+");
