@@ -10,8 +10,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // 1. Load documents — prefer real .txt files from the "documents" folder,
-        //    fall back to the hardcoded sample set if that folder is missing/empty.
         List<Document> documents;
         try {
             documents = FileDocumentLoader.loadFromFolder("documents");
