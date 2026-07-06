@@ -6,18 +6,7 @@ package search.engine;
 
 import java.util.*;
 
-/**
- * Builds an inverted index over a set of documents and ranks search
- * results using TF-IDF (Term Frequency - Inverse Document Frequency).
- *
- * Inverted index:   word -> set of document ids that contain that word
- *                   This gives O(1) average lookup of "which docs have this word"
- *
- * TF  (term frequency)      = how often a word appears in one document
- * IDF (inverse doc freq)    = how rare that word is across ALL documents
- * TF-IDF = TF * IDF          -> higher score means the word is important
- *                               and specific to that document
- */
+
 public class InvertedIndex {
 
     // word -> set of document ids containing it
@@ -45,8 +34,6 @@ public class InvertedIndex {
         return tokens;
     }
 
-    /** Adds a document to the index. Call this once per document while building.
-     * @param doc */
     public void addDocument(Document doc) {
         documents.put(doc.getId(), doc);
         totalDocuments++;
@@ -80,12 +67,7 @@ public class InvertedIndex {
         return (double) count / length;
     }
 
-    /**
-     * Searches the index for a query string and returns matching documents
-     * ranked by
-     * @param query
-     * @return  combined TF-IDF score, highest first.
-     */
+
     public List<SearchResult> search(String query) {
         List<String> queryWords = tokenize(query);
 
